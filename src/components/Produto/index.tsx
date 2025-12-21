@@ -1,18 +1,19 @@
-import { Produto as ProdutoType } from '../../App'
+import type { Produto } from '../../types/Produto'
 import * as S from './styles'
 import { useDispatch } from 'react-redux'
 import { adicionar } from '../../store/carrinhoSlice'
 
 type Props = {
-  produto: ProdutoType
-  favoritar: (produto: ProdutoType) => void
+  produto: Produto
+  favoritar: (produto: Produto) => void
   estaNosFavoritos: boolean
 }
 
 export const paraReal = (valor: number) =>
-  new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
-    valor
-  )
+  new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(valor)
 
 const ProdutoComponent = ({
   produto,
@@ -26,7 +27,9 @@ const ProdutoComponent = ({
       <S.Capa>
         <img src={produto.imagem} alt={produto.nome} />
       </S.Capa>
+
       <S.Titulo>{produto.nome}</S.Titulo>
+
       <S.Prices>
         <strong>{paraReal(produto.preco)}</strong>
       </S.Prices>
