@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import type { Produto } from '../types/Produto'
 
 export const api = createApi({
     reducerPath: 'api',
@@ -6,8 +7,8 @@ export const api = createApi({
     baseUrl: 'https://fake-api-tau.vercel.app/api/ebac_sports'
     }),
     endpoints: (builder) => ({
-    getProdutos: builder.query<any[], void>({
-        query: () => 'produtos'
+    getProdutos: builder.query<Produto[], void>({
+        query: () => ''
     })
     })
 })
