@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { useGetProdutosQuery } from './services/api'
 
 import Header from './components/Header'
 import Produtos from './containers/Produtos'
@@ -10,12 +9,6 @@ import { adicionar } from './store/carrinhoSlice'
 import type { Produto } from './types/Produto'
 
 function App() {
-  const {
-    data: produtos,
-    isLoading,
-    error
-  } = useGetProdutosQuery()
-
   const carrinho = useSelector(
     (state: RootState) => state.carrinho.itens
   )
@@ -32,16 +25,12 @@ function App() {
     }
   }
 
-  if (isLoading) return <p>Carregando produtos...</p>
-  if (error) return <p>Erro ao carregar produtos</p>
-
   return (
     <>
       <GlobalStyle />
       <div className="container">
         <Header itensNoCarrinho={carrinho} favoritos={[]} />
         <Produtos
-          produtos={produtos ?? []}
           favoritos={[]}
           favoritar={() => {}}
           adicionarAoCarrinho={adicionarAoCarrinho}
