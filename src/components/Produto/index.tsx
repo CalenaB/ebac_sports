@@ -1,6 +1,7 @@
 import type { Produto } from '../../types/Produto'
 import * as S from './styles'
 import { useDispatch } from 'react-redux'
+import type { AppDispatch } from '../../store'
 import { adicionar } from '../../store/carrinhoSlice'
 
 type Props = {
@@ -20,7 +21,7 @@ const ProdutoComponent = ({
   favoritar,
   estaNosFavoritos
 }: Props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   return (
     <S.Produto>
