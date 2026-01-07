@@ -1,6 +1,6 @@
 import * as S from './styles'
 
-import { Produto } from '../../App'
+import type { Produto } from '../../types/Produto'
 
 import cesta from '../../assets/cesta.png'
 import { paraReal } from '../Produto'
@@ -21,7 +21,7 @@ const Header = ({ itensNoCarrinho, favoritos }: Props) => {
       <h1>EBAC Sports</h1>
       <div>
         <span>{favoritos.length} favoritos</span>
-        <img src={cesta} />
+        <img src={cesta} alt="Carrinho de compras" />
         <span>
           {itensNoCarrinho.length} itens, valor total: {paraReal(valorTotal)}
         </span>
