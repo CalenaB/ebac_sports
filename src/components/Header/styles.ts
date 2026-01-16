@@ -7,11 +7,11 @@ export const Header = styled.header`
     ${cores.corPrincipal},
     ${cores.corSecundaria}
   );
-  margin: 80px 0;
+  margin: 32px 0;
   padding: 16px 24px;
   display: flex;
-  border-radius: 6px;
   align-items: center;
+  border-radius: 6px;
 
   h1 {
     font-size: 18px;
@@ -23,23 +23,26 @@ export const Header = styled.header`
   div {
     display: flex;
     align-items: center;
+    gap: 12px;
 
     img {
       width: 18px;
-      margin-right: 8px;
-      margin-left: 16px;
     }
 
     span {
       color: ${cores.corFundo};
+      font-size: 14px;
+      white-space: nowrap;
     }
   }
 
   @media (max-width: 768px) {
     flex-direction: column;
+    align-items: flex-start;
 
     div {
-      margin-top: 16px;
+      margin-top: 12px;
+      gap: 8px;
     }
   }
 `

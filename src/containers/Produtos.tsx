@@ -1,42 +1,52 @@
-import { Produto as ProdutoType } from '../App'
+import { useState } from 'react'
 import Produto from '../components/Produto'
+import { Produto as ProdutoType } from '../types/Produto'
+import { useGetProdutosQuery } from '../store/api'
 
 import * as S from './styles'
 
-type Props = {
-  produtos: ProdutoType[]
-  favoritos: ProdutoType[]
-  adicionarAoCarrinho: (produto: ProdutoType) => void
-  favoritar: (produto: ProdutoType) => void
-}
+const ProdutosComponent = () => {
+  const { data: produtos, isLoading, isError } = useGetProdutosQuery()
 
-const ProdutosComponent = ({
-  produtos,
-  favoritos,
-  adicionarAoCarrinho,
-  favoritar
-}: Props) => {
-  const produtoEstaNosFavoritos = (produto: ProdutoType) => {
-    const produtoId = produto.id
-    const IdsDosFavoritos = favoritos.map((f) => f.id)
+  const [favoritos, setFavoritos] = useState<ProdutoType[]>([])
 
-    return IdsDosFavoritos.includes(produtoId)
+  const favoritar = (produto: ProdutoType) => {
+    const produtoJaFavorito = favoritos.some((f) => f.id === produto.id)
+
+    if (produtoJaFavorito) {
+      setFavoritos(favoritos.filter((f) => f.id !== produto.id))
+      return
+    }
+
+    setFavoritos([...favoritos, produto])
+  }
+
+  const produtoEstaNosFavoritos = (produto: ProdutoType) =>
+    favoritos.some((f) => f.id === produto.id)
+
+  if (isLoading) {
+    return <p>Carregando produtos...</p>
+  }
+
+  if (isError) {
+    return <p>Erro ao carregar produtos. Tente novamente.</p>
+  }
+
+  if (!produtos || produtos.length === 0) {
+    return <p>Nenhum produto encontrado.</p>
   }
 
   return (
-    <>
-      <S.Produtos>
-        {produtos.map((produto) => (
-          <Produto
-            estaNosFavoritos={produtoEstaNosFavoritos(produto)}
-            key={produto.id}
-            produto={produto}
-            favoritar={favoritar}
-            aoComprar={adicionarAoCarrinho}
-          />
-        ))}
-      </S.Produtos>
-    </>
+    <S.Produtos>
+      {produtos.map((produto) => (
+        <Produto
+          key={produto.id}
+          produto={produto}
+          favoritar={favoritar}
+          estaNosFavoritos={produtoEstaNosFavoritos(produto)}
+        />
+      ))}
+    </S.Produtos>
   )
 }
 
